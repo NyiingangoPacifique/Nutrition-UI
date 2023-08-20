@@ -6,27 +6,37 @@ import { ProgressBar } from '@tremor/react';
 import Header from "../Header";
 import Footer from "../Footer";
 import jwt_decode from 'jwt-decode';
+import { createconversation,resetConversation } from "../../features/Conversation/convoSlice";
 
 function Home () {
   const navigate = useNavigate();
     const dispatch = useDispatch()
 
-    // useEffect(() => {
-    // const userData = JSON.parse(localStorage?.getItem('userData'));
-    //   const tokenn = userData?.token;
-    //   const decodedToken = jwt_decode(tokenn);
-    //   const userEmail = decodedToken?.email;
-    //   const isAdminUser = decodedToken?.isAdmin;
-    //   console.log("---------isAdmin--------",userEmail)
-    //   console.log("---------isAdmin--------",isAdminUser)
-    //   if(isAdminUser)
-    //   {
-    //     navigate('/dashboard')
-    //   }
-    //   else {
-    //     navigate('/')
-    //   }
-    // }, [ navigate, dispatch])
+  useEffect(() => {
+    // Reset appointment data when component unmounts or changes
+    return () => {
+      dispatch(resetConversation());
+    };
+  }, [dispatch]);
+
+  const handleTreate = async (event) => {
+    event.preventDefault();
+
+    // Prepare the request body
+    const requestBody = {};
+
+    console.log("$%$%$%$%$",requestBody)
+
+    try {
+      dispatch(createconversation(requestBody));
+      console.log('conversation creation initiated.');
+      navigate("/Survey")
+      
+    } catch (error) {
+      console.error('Appointment creation failed:', error.message);
+      
+    }
+  };
 
     const handleStart = () => {
       navigate('/product');
@@ -49,7 +59,7 @@ function Home () {
                   <div class="md:w-full p-">
                     <p class="text-3xl font-bold">Your Doctor's office is now online</p>
                     <p class="font-bold text-sm mb-10">From primary care to mental health, get treated from home.</p>
-                    <a href="#" class="bg-gray-800 mt-10 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">Get Treated</a>
+                    <a href="#" onClick={handleTreate} class="bg-gray-800 mt-10 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">Get Treated</a>
                   </div>  
                 </div>
               </div>

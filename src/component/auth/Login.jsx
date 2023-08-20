@@ -46,23 +46,17 @@ function Login() {
     
     // Redirect when logged in
     if (isSuccess) {
-      const userData = JSON.parse(localStorage.getItem('userData'));
-      const tokenn = userData?.token;
-      const decodedToken = jwt_decode(tokenn);
-      console.log("*************",tokenn,"99999999")
-      const userEmail = decodedToken?.email;
-      const isAdminUser = decodedToken?.isAdmin;
-      console.log("---------isAdmin--------",userEmail)
-      console.log("---------isAdmin--------",isAdminUser)
-      if(isAdminUser)
-      {
-        navigate('/dashboard')
-      }
-      else {
+      
         navigate('/')
-      }
+        toast.success('Login successful', {
+          position: "top-center",
+          autoClose: 3000, // 3 seconds
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         
-        toast.success('login successfully')
     }
 
     

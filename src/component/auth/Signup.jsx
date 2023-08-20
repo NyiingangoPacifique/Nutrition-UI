@@ -49,9 +49,25 @@ function Signup () {
         
         // Redirect when logged in
         if (isSuccess) {
+            toast.success('Register successful', {
+                position: "top-center",
+                autoClose: 3000, // 3 seconds
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
             dispatch(resetAuth())
+            toast.success('Register successful', {
+                position: "top-center",
+                autoClose: 3000, // 3 seconds
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+              });
             navigate('/login')
-            toast.success('Register successfully')
+            
         }
     
         dispatch(resetAuth())

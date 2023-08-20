@@ -7,7 +7,8 @@ import Signup from "./component/auth/Signup";
 import AdminDashboard from "./component/home/AdminDashboard";
 import Product from "./component/home/page/Product";
 import Chat from "./component/Chat";
-import { Survey } from "./component/Survey";
+import Survey from "./component/Survey"
+import AddAppointment from "./component/appointment/AddApointment";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/product" element={<Product />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/survey" element={<Survey />} />
+          <Route path="/addapt" element={<AddAppointment />} />
         </Routes>
       </Router>
     </div>

@@ -29,15 +29,16 @@ const login = async (userData) => {
 };
 
 // Login a user
-// const logout = async () => {
-//   const response = await bkApi.get("auth/logout");
-//   localStorage.removeItem("userData")
-//   return response.data;
-// };
+const logout = async () => {
+  const response = await nutritionApi.get("auth/logout/");
+  localStorage.removeItem("userData")
+  return response.data;
+};
 
 
 const authService = {
   login,
+  logout,
   register,
 };
 
