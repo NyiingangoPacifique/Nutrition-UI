@@ -23,11 +23,23 @@ function Home () {
     event.preventDefault();
 
     // Prepare the request body
-    const requestBody = {};
+    const requestBody = {
+      questionnaire: {
+        chronic_diseases: "diabetes",
+        activity_level: "sedentary",
+        smoking_habits: "never",
+        alcohol_consumption: "never",
+        sleep_patterns: "less_than_6_hours",
+        current_diet: "vegetarian",
+        food_allergies: "gluten",
+        physical_disability: true
+      }
+    };
 
-    console.log("$%$%$%$%$",requestBody)
+    
 
     try {
+      console.log("$%$%$requestion body%$%$",requestBody)
       dispatch(createconversation(requestBody));
       console.log('conversation creation initiated.');
       navigate("/Survey")

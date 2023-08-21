@@ -23,7 +23,7 @@ const convoCreation = async (convoData) => {
       Accept: "*/*",
       Authorization: `Bearer ${token}`,
     };
-    console.log("%#$#$#$====================",decoded)
+    console.log("%#$#$#$====================",convoData)
     console.log("%#$#$#$====================",userId)
   const response = await nutritionApi.post(`organization/me/${userId}/conversation/`, convoData,{ headers });
   console.log("&&&&&&&&&&&",response)
