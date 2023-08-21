@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    build: 
+      context: .
+    container_name: nutri_frontend
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true
