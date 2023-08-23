@@ -5,7 +5,6 @@ import Home from "./component/home/Home";
 import NotFound from "./component/404Page";
 import Signup from "./component/auth/Signup";
 import AdminDashboard from "./component/home/AdminDashboard";
-import Product from "./component/home/page/Product";
 import Chat from "./component/Chat";
 import Survey from "./component/Survey"
 import AddAppointment from "./component/appointment/AddApointment";
@@ -20,7 +19,6 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/*" element={<NotFound />} />
           <Route path="/dashboard" element={<AdminDashboard />} />
-          <Route path="/product" element={<Product />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/survey" element={<Survey />} />
           <Route path="/addapt" element={<AddAppointment />} />

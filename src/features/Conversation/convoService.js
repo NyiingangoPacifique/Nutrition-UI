@@ -2,10 +2,10 @@ import nutritionApi from '../../api/api'
 import jwtDecode from 'jwt-decode';
 
 const storedToken = localStorage.getItem('userData');
-const decoded = jwtDecode(storedToken);
-const userId = decoded.user_id;
+// const decoded = jwtDecode(storedToken);
+// const userId = decoded.user_id;
 
-console.log("%#$#$#$====================",userId)
+// console.log("%#$#$#$====================",userId)
 // Register user
 const convoCreation = async (convoData) => {
     const userDataString = localStorage.getItem('userData');
@@ -24,8 +24,8 @@ const convoCreation = async (convoData) => {
       Authorization: `Bearer ${token}`,
     };
     console.log("%#$#$#$====================",convoData)
-    console.log("%#$#$#$====================",userId)
-  const response = await nutritionApi.post(`organization/me/${userId}/conversation/`, convoData,{ headers });
+    // console.log("%#$#$#$====================",userId)
+  const response = await nutritionApi.post(`organization/me/2/conversation/`, convoData,{ headers });
   console.log("&&&&&&&&&&&",response)
   return response.data;
 };

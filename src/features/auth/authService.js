@@ -30,8 +30,29 @@ const login = async (userData) => {
 
 // Login a user
 const logout = async () => {
-  const response = await nutritionApi.get("auth/logout/");
-  localStorage.removeItem("userData")
+  const userDataString = localStorage.getItem('userData');
+    const userData = JSON.parse(userDataString);
+  
+    if (!userData || !userData.token) {
+      throw new Error("Token not found in userData");
+    }
+  
+    // Get the token from userData
+    const token = userData.token;
+  
+    // Set the token in the request headers
+    const headers = {
+      Accept: "*/*",
+      "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+      Authorization: `Bearer ${token}`,
+    };
+    console.log("##########Header####",headers)
+  const response = await nutritionApi.post("auth/logout/", {
+    headers: headers
+  });
+  console.log("##############",response)
+  localStorage.clear();
+  console.log("logout&&&&&&&&&&&&&&")
   return response.data;
 };
 

@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ProgressBar } from '@tremor/react';
 import Header from "../Header";
 import Footer from "../Footer";
-import jwt_decode from 'jwt-decode';
 import { createconversation,resetConversation } from "../../features/Conversation/convoSlice";
 
 function Home () {
