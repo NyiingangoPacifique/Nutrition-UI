@@ -9,6 +9,7 @@ const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
     user: user ? user : null,
+    userOrganization:[],
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -48,6 +49,22 @@ export const login = createAsyncThunk(
     }
 )
 
+// Get User by organization
+export const getUserMeOrganization = createAsyncThunk(
+    'organization/me/userId',
+    async (userId, thunkAPI) => {
+        try {
+            return await authService.getUserOrganization()
+        } catch (error) {
+            const message = (
+                error.response && error.response.data && error.response.data.message
+            ) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 // Log out user 
 export const logout = createAsyncThunk(
     'auth/logout',
@@ -61,9 +78,11 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         resetAuth: (state) => {
+            state.user = null
             state.isLoading = false
             state.isError = false
             state.isSuccess = false
+            state.userOrganization=[]
             state.message = ''
         }
     },
@@ -96,6 +115,19 @@ export const authSlice = createSlice({
                 state.isError = true 
                 state.message = action.payload 
                 state.user = null
+            })
+            .addCase(getUserMeOrganization.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getUserMeOrganization.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.userOrganization = action.payload
+            })
+            .addCase(getUserMeOrganization.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
             })
             .addCase(logout.fulfilled, (state) => {
                 state.user = null

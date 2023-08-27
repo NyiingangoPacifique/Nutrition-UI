@@ -7,8 +7,8 @@ const storedToken = localStorage.getItem('userData');
 
 // console.log("%#$#$#$====================",userId)
 // Register user
-const convoCreation = async (convoData) => {
-  const userDataString = localStorage.getItem('userData');
+const healthCreation = async (healthData) => {
+    const userDataString = localStorage.getItem('userData');
   const userData = JSON.parse(userDataString);
 
   if (!userData || !userData.token) {
@@ -29,16 +29,16 @@ const convoCreation = async (convoData) => {
       Accept: "*/*",
       Authorization: `Bearer ${token}`,
     };
-    console.log("%#$#$#$====================",convoData)
+    console.log("%#$#$#$====================",healthData)
     // console.log("%#$#$#$====================",userId)
-  const response = await nutritionApi.post(`organization/me/${user_id}/conversation/`, convoData,{ headers });
+  const response = await nutritionApi.post(`organization/me/${user_id}/health/`, healthData,{ headers });
   console.log("&&&&&&&&&&&",response)
   return response.data;
 };
 
 
-const convoService = {
-  convoCreation,
+const healthService = {
+  healthCreation,
 };
 
-export default convoService;
+export default healthService;

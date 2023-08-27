@@ -1,4 +1,5 @@
 import nutritionApi from '../../api/api'
+import jwtDecode from 'jwt-decode';
 // Register user
 const register = async (userData) => {
   const response = await nutritionApi.post("auth/register/", userData);
@@ -26,6 +27,37 @@ const login = async (userData) => {
   }
 
   return response.data;
+};
+
+const getUserOrganization = async () => {
+  const userDataString = localStorage.getItem('userData');
+  const userData = JSON.parse(userDataString);
+
+  if (!userData || !userData.token) {
+    throw new Error("Token not found in userData");
+  }
+
+  // Get the token from userData
+  const token = userData.token;
+
+  // Decode the JWT token to get the payload
+  const tokenPayload = jwtDecode(token);
+
+  // Extract user_id from the payload
+  const user_id = tokenPayload.user_id;
+
+  // Set the token in the request headers
+  const headers = {
+    Accept: "*/*",
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await nutritionApi.get(`organization/me/${user_id}/`, {
+    headers: headers
+  });
+
+  const data = response.data;
+  return data;
 };
 
 // Login a user
@@ -60,6 +92,7 @@ const logout = async () => {
 const authService = {
   login,
   logout,
+  getUserOrganization,
   register,
 };
 

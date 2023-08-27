@@ -46,8 +46,8 @@ function Login() {
     
     // Redirect when logged in
     if (isSuccess) {
-      
-        navigate('/')
+        dispatch(resetAuth)
+        navigate('/patient')
         toast.success('Login successful', {
           position: "top-center",
           autoClose: 3000, // 3 seconds

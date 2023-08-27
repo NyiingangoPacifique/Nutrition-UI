@@ -48,51 +48,7 @@ const Table = ({ data }) => {
 
   return (
     <div className="w-full mx-auto">
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearch}
-        className="w-1/2 p-2 border border-gray-300 rounded-md mb-4"
-      />
-      {filteredAndSortedData.length === 0 ? (
-        <p className="text-center text-gray-500">No data found.</p>
-      ) : (
-        <table className="w-1/2">
-          <thead>
-            <tr>
-              {columns.map((column, index) => (
-                <th key={index} className="p-1 border-b border-gray-300">
-                  {column}
-                  <input
-                    type="text"
-                    placeholder="Filter..."
-                    value={filters[column] || ''}
-                    onChange={e =>
-                      handleFilterChange(column, e.target.value)
-                    }
-                    className="mt-2 p-1 text-sm border border-gray-300 rounded-md"
-                  />
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {filteredAndSortedData.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {columns.map((column, columnIndex) => (
-                  <td
-                    key={columnIndex}
-                    className="p-1 border-b border-gray-300"
-                  >
-                    {row[column]}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      
     </div>
   );
 };
