@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import { useNavigate, Link } from 'react-router-dom';
 import {  
     useSelector,
@@ -21,6 +21,14 @@ const AppointmentAdd = () => {
     const navigate = useNavigate();
   const dispatch = useDispatch()
     const [currentStep, setCurrentStep] = useState(1);
+    const {
+        appointment,
+        isLoading,
+        isError,
+        isSuccess,
+        message,
+        isCreatedApt
+    } = useSelector(state => state.appointments)
     const [formData, setFormData] = useState({
         survey: {
             chronicDisease: '',
@@ -67,6 +75,14 @@ const AppointmentAdd = () => {
         }));
     };
 
+    useEffect(() => {
+        if (isCreatedApt) {
+            dispatch(resetAppointment())
+            navigate("/patient");
+        }
+    
+        
+    }, [isError, isSuccess, message, navigate, dispatch])
     const handleFormSubmit = () => {
         console.log("Survey Form Data:", formData.survey);
         console.log("Schedule Form Data:", formData.schedule);
@@ -95,6 +111,7 @@ const AppointmentAdd = () => {
                 pauseOnHover: true,
                 draggable: true,
               });
+              navigate("/patient");
               
             } catch (error) {
               console.error('Appointment creation failed:', error.message);
@@ -271,7 +288,7 @@ const AppointmentAdd = () => {
                                         for="title"
                                         class="mb-3 block text-base font-medium text-[#07074D]"
                                         >
-                                        Title
+                                        How are you feeling today?
                                         </label>
                                         <input
                                         type="text"
@@ -279,7 +296,7 @@ const AppointmentAdd = () => {
                                         id="title"
                                         onChange={e => handleInputChange("schedule", "title", e.target.value)}
                                         value={formData.schedule.title}
-                                        placeholder="Enter title"
+                                        placeholder="Enter how you feel"
                                         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                                         />
                                     </div>
@@ -288,17 +305,16 @@ const AppointmentAdd = () => {
                                         for="description"
                                         class="mb-3 block text-base font-medium text-[#07074D]"
                                         >
-                                        Description
+                                        What symptoms are you experiencing?
                                         </label>
-                                        <input
-                                        type="text"
+                                        <textarea 
                                         name="description"
                                         id="description"
                                         onChange={e => handleInputChange("schedule", "description", e.target.value)}
-                                        value={formData.schedule.description}
-                                        placeholder="Enter your description"
-                                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                                        />
+                                        value={formData.schedule.description} 
+                                        rows="10"
+                                            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"></textarea>
+                                        
                                     </div>
                                     <div class="-mx-3 flex flex-wrap">
                                         <div class="w-full px-3 sm:w-1/2">

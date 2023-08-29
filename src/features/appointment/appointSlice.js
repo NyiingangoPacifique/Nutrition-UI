@@ -10,6 +10,8 @@ const user = JSON.parse(localStorage.getItem('user'))
 const initialState = {
     appointment: {},
     appointments: [],
+    appointmentApplications: [],
+    organizationAppointments: [],
     isError: false,
     isErrorApt: false,
     isSuccess: false,
@@ -34,6 +36,35 @@ export const createAppointment = createAsyncThunk(
         }
     }
 )
+export const getAppointmentApplication = createAsyncThunk(
+    'appointment/application',
+    async (thunkAPI) => {
+        try {
+            return await appointmentService.getAppiotmentApplication()
+        } catch (error) {
+            const message = (
+                error.response && error.response.data && error.response.data.message
+            ) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
+export const getOrganizationAppointment = createAsyncThunk(
+    'appointment/organization',
+    async (thunkAPI) => {
+        try {
+            return await appointmentService.getOrganizationAppointment()
+        } catch (error) {
+            const message = (
+                error.response && error.response.data && error.response.data.message
+            ) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
 
 
 export const appointmentSlice = createSlice({
@@ -42,6 +73,8 @@ export const appointmentSlice = createSlice({
     reducers: {
         resetAppointment: (state) => {
             state.message = ''
+            state.appointmentApplications= []
+            state.organizationAppointments= []
             state.isError = false
             state.isErrorApt = false
             state.isSuccess = false
@@ -67,6 +100,32 @@ export const appointmentSlice = createSlice({
                 state.isLoadingApt = false
                 state.isCreatedApt = false
                 state.isErrorApt = true
+                state.message = action.payload
+            })
+            .addCase(getAppointmentApplication.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getAppointmentApplication.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.appointmentApplications = action.payload
+            })
+            .addCase(getAppointmentApplication.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getOrganizationAppointment.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getOrganizationAppointment.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.organizationAppointments = action.payload
+            })
+            .addCase(getOrganizationAppointment.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
                 state.message = action.payload
             })
         }

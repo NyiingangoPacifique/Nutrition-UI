@@ -18,6 +18,7 @@ const Layout = ({ children }) => {
         if (accountType !== "p") {
            navigate("/")
         }
+        
     return (
         <>
             <div className='flex flex-auto h-screen'>

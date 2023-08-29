@@ -53,17 +53,25 @@ function Chat() {
   return (
     <div className="flex flex-row h-screen">
       <div className="flex flex-col w-1/4 bg-gray-100 p-4 overflow-y-auto border-r">
-        {userOrganization.patient_conversations.map((conversation) => (
-          <div
-            key={conversation.id}
-            className={`cursor-pointer p-2 ${
-              selectedConversation === conversation.id ? "bg-gray-200" : ""
-            }`}
-            onClick={() => handleConversationClick(conversation.id)}
-          >
-            {conversation.id}
+        {/* Render chat conversations if userOrganization is not null */}
+        {userOrganization ? (
+          userOrganization.patient_conversations.map((conversation) => (
+            <div
+              key={conversation.id}
+              className={`cursor-pointer p-2 ${
+                selectedConversation === conversation.id ? "bg-gray-200" : ""
+              }`}
+              onClick={() => handleConversationClick(conversation.id)}
+            >
+              {conversation.id}
+            </div>
+          ))
+        ) : (
+          // Display message when userOrganization is null
+          <div className="p-2">
+            No chat available. Please request an appointment.
           </div>
-        ))}
+        )}
       </div>
 
       <div className="flex flex-col flex-grow bg-white shadow-xl rounded-lg p-4">

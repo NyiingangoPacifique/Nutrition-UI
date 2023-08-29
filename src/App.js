@@ -18,6 +18,7 @@ import MealAdd from "./component/dietitian/MealAdd";
 import PrescriptionAdd from "./component/dietitian/PrescriptionAdd";
 import MealPlanAdd from "./component/dietitian/MealPlanAdd";
 import ChatDiet from "./component/dietitian/ChatDiet"
+import Navig from "./component/auth/Navig";
 function App() {
   return (
     <div className="App">
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/navig" element={<Navig />} />
           <Route path="/*" element={<NotFound />} />
           <Route path="*" element={<Layout />}>
             <Route path="patient" element={<Patient />} />

@@ -25,7 +25,6 @@ function Login() {
 
   const userOrganization = useSelector((state) => state.auths.userOrganization)
     const accountType = userOrganization?.account_type;
-    console.log("!@@@@@@@@@@@@@@",accountType)
   
 
   const {
@@ -54,7 +53,6 @@ function Login() {
     
     // Redirect when logged in
     if (isSuccess) {
-        dispatch(resetAuth)
         navigate("/patient");
         toast.success('Login successful', {
           position: "top-center",
