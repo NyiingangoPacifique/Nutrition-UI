@@ -20,6 +20,7 @@ import { CHRONIC_DISEASE_CHOICES,
 const AppointmentAdd = () => {
     const navigate = useNavigate();
   const dispatch = useDispatch()
+  const userOrganization = useSelector((state) => state.auths.userOrganization)
     const [currentStep, setCurrentStep] = useState(1);
     const {
         appointment,
@@ -41,7 +42,7 @@ const AppointmentAdd = () => {
             physical_disability: false
         },
         schedule: {
-            user: 2,
+            user: userOrganization.id,
             title: '',
             description: '',
             date: '',

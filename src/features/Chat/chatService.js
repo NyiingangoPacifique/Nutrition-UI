@@ -33,6 +33,12 @@ const getUserChatMessage = async (conversationId) => {
 };
 
 const messageCreation = async (messageData) => {
+    const contentMessage ={
+      content: messageData.content
+    }
+    const conversationId = messageData.conversation_id;
+    console.log("WWWWcontent Message WWWW",contentMessage)
+    console.log("WWWWWWWWWWWWWWWW",conversationId)
     const userDataString = localStorage.getItem('userData');
     const userData = JSON.parse(userDataString);
   
@@ -56,7 +62,7 @@ const messageCreation = async (messageData) => {
       };
       console.log("%#$#$#$====================",messageData)
       // console.log("%#$#$#$====================",userId)
-    const response = await nutritionApi.post(`organization/me/${user_id}/conversation/382edd1d-5c17-48bf-ae64-c62c4b0de304/messages/`, messageData,{ headers });
+    const response = await nutritionApi.post(`organization/me/${user_id}/conversation/${conversationId}/messages/`, contentMessage,{ headers });
     console.log("&&&&&&&&&&&",response)
     return response.data;
   };

@@ -17,7 +17,7 @@ const appointmentCreation = async (appointmentData) => {
       Accept: "*/*",
       Authorization: `Bearer ${token}`,
     };
-    console.log("&&&&&&&&%%%%",headers)
+    console.log("&&&&&&&&%%%%   @@@@@@appointmentData",appointmentData)
   const response = await nutritionApi.post("appointments/applications/", appointmentData,{ headers });
 
   return response.data;

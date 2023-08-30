@@ -87,7 +87,7 @@ function Patient() {
         </div>
         </div>
         <div>
-        <button onClick={handleApt} class="bg-blue-400 rounded-full w-auto m-4 h-16 text-white font-semibold">
+        <button onClick={handleApt} class="bg-gray-800 rounded-full w-auto m-4 h-16 text-white font-semibold">
             <div class="flex gap-3 justify-center items-center m-4">
               <span>
                   <VscDiffAdded />
