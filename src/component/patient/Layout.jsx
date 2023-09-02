@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
         
     return (
         <>
-            <div className='flex flex-auto h-screen'>
+            <div className='flex flex-auto'>
                 <Sidebar />
                 <div className='grow'>
                     <Navbar />

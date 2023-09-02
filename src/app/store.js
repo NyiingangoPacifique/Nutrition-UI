@@ -4,6 +4,7 @@ import appointReducer from "../features/appointment/appointSlice";
 import convoReducer from "../features/Conversation/convoSlice";
 import healthReducer from "../features/health/healthSlice";
 import chatReducer from "../features/Chat/chatSlice";
+import prescriptionReducer from "../features/prescription/prescriptionSlice";
 export const store = configureStore({
   reducer: {
     auths: authReducer, 
@@ -11,5 +12,6 @@ export const store = configureStore({
     conversations: convoReducer,
     healths: healthReducer,
     chats: chatReducer,
+    prescriptions: prescriptionReducer,
   },
 });

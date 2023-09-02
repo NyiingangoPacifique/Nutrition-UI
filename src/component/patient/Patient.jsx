@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { getAppointmentApplication,getOrganizationAppointment,resetAppointment } from '../../features/appointment/appointSlice';
 import { getUserMeOrganization } from '../../features/auth/authSlice';
+import Footer from '../Footer';
 import {VscDiffAdded} from 'react-icons/vsc'
 function Patient() {
     const dispatch = useDispatch();
@@ -11,12 +12,17 @@ function Patient() {
     const appointmentApplications = useSelector((state) => state.appointments.appointmentApplications)
     const organizationAppointments= useSelector((state) => state.appointments.organizationAppointments)
     const userOrganization = useSelector((state) => state.auths.userOrganization)
+    console.log("@%%%%%%%%%%%%%%%%%%%%%%%%",userOrganization)
     const userName = userOrganization.first_name
     const fullName = userOrganization.first_name + " " + userOrganization.last_name;
     const email = userOrganization.email
     const profilePic= userOrganization.profile ? userOrganization.profile.image : 'https://res.cloudinary.com/basha18/image/upload/v1693311937/userprofile-removebg-preview_qfq3eh.png'
-    console.log("@###########@#",organizationAppointments)
-    console.log("@Doctor@#",organizationAppointments.doctor)
+    if (organizationAppointments) {
+      const filteredUsers = organizationAppointments.filter(user => user.user.email === email);
+      console.log("Doooooooooooo",filteredUsers);
+    } else {
+      console.log("userOrganization is null or empty");
+    }
     useEffect(() => {
       dispatch(getAppointmentApplication());
       dispatch(getOrganizationAppointment());
@@ -36,7 +42,7 @@ function Patient() {
   const user_id = tokenPayload.user_id;
   console.log("$$$$$$$$$$$$",user_id)
   const filteredAppointments = appointmentApplications.filter(appointment => appointment.user === user_id);
-  // const filteredOrganizationAppointments = organizationAppointments.filter(appointment => appointment.user === user_id);
+  const filteredOrganizationAppointments = organizationAppointments.filter(user => user.user.email === email);
   console.log("$$$$$$$$$$$$filteredAppointments",filteredAppointments)
 
   const handleApt = () => {
@@ -126,7 +132,7 @@ function Patient() {
         </div>
       </div>
       <h1 className="text-3xl text-center mt-8">Confirmed Appointments</h1>
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-4 mb-20">
           <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10">
             <table class="w-full table-fixed">
                 <thead>
@@ -140,7 +146,7 @@ function Patient() {
                     </tr>
                 </thead>
                 <tbody className="bg-white">
-                  {organizationAppointments.map(orgAppointment => (
+                  {filteredOrganizationAppointments.map(orgAppointment => (
                       <tr key={orgAppointment.id}>
                           <td className="py-4 px-6 border-b border-gray-200">{orgAppointment.doctor ? orgAppointment.doctor.first_name : 'No Doctor'}</td>
                           <td className="py-4 px-6 border-b border-gray-200">{orgAppointment.title}</td>
@@ -158,6 +164,7 @@ function Patient() {
             </table>
         </div>
       </div>
+      <Footer />
       </div>
     );
   }

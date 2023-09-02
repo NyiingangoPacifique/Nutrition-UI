@@ -3,7 +3,7 @@ import { React } from "react";
 function Footer() {
     return (
       <div>
-        <div class="bg-white dark:bg-gray-900">
+        <div class="bg-white dark:bg-gray-800">
             <div class="container px-6 py-12 mx-auto">
                 <div class="text-center">
                     <h2 class="text-2xl font-semibold text-gray-800 dark:text-white">Let’s get started on something great for your life</h2>

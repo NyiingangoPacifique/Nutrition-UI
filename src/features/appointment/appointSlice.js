@@ -36,6 +36,20 @@ export const createAppointment = createAsyncThunk(
         }
     }
 )
+export const updateAppointment = createAsyncThunk(
+    'appointment/update',
+    async (appointmentUpdate, thunkAPI) => {
+        try {
+            return await appointmentService.appointmentUpdate(appointmentUpdate)
+        } catch (error) {
+            const message = (
+                error.response && error.response.data && error.response.data.message
+            ) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
 export const getAppointmentApplication = createAsyncThunk(
     'appointment/application',
     async (thunkAPI) => {
@@ -97,6 +111,23 @@ export const appointmentSlice = createSlice({
                 state.appointment = action.payload
             })
             .addCase(createAppointment.rejected, (state, action) => {
+                state.isLoadingApt = false
+                state.isCreatedApt = false
+                state.isErrorApt = true
+                state.message = action.payload
+            })
+            .addCase(updateAppointment.pending, (state) => {
+                state.isLoadingApt = true
+                state.isCreatedApt = false
+                state.isErrorApt = false
+            })
+            .addCase(updateAppointment.fulfilled, (state=[], action) => {
+                state.isLoadingApt = false
+                state.isCreatedApt = true
+                state.isErrorApt = false
+                state.appointment = action.payload
+            })
+            .addCase(updateAppointment.rejected, (state, action) => {
                 state.isLoadingApt = false
                 state.isCreatedApt = false
                 state.isErrorApt = true

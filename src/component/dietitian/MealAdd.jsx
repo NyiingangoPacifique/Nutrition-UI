@@ -50,11 +50,11 @@ function MealAdd() {
                 >
                 Description
                 </label>
-                <textarea
-                class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                id="exampleFormControlTextarea1"
-                rows="4"
-                placeholder="Your message"></textarea>
+                <textarea 
+                  name="description"
+                  id="description"
+                  rows="10"
+                      class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"></textarea>
             </div>
             <div class="mb-5">
               <button

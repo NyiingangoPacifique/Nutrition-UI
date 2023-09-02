@@ -47,13 +47,13 @@ function Login() {
     dispatch(getUserMeOrganization());
     }, [dispatch]);
   useEffect(() => {
-    if (isError) {
-        toast.error(message)
-    }
+    // if (isError) {
+    //     toast.error(message)
+    // }
     
     // Redirect when logged in
     if (isSuccess) {
-        navigate("/patient");
+        navigate("/diet");
         toast.success('Login successful', {
           position: "top-center",
           autoClose: 3000, // 3 seconds

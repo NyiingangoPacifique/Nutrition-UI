@@ -47,7 +47,15 @@ function Home () {
       navigate('/login'); 
     } else {
       console.log("====================")
-      navigate('/patient'); 
+      if (userOrganization && userOrganization.account_type === "n") {
+        // Navigate to /diet
+        navigate('/diet');
+      } else if (userOrganization && userOrganization.account_type === "p") {
+        // Navigate to /patient
+        navigate('/patient');
+      } else {
+        console.log("Invalid user organization or account type");
+      }
     }
   };
 

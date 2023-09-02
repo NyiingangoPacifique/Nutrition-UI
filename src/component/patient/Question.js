@@ -45,12 +45,12 @@ export const CHRONIC_DISEASE_CHOICES = [
   ];
   
   export const BLOODTYPE = [
-    ['a+', 'A+'],
-    ['a-', 'A-'],
-    ['b+', 'B+'],
-    ['b-', 'B-'],
-    ['ab+', 'AB+'],
-    ['ab-', 'AB-'],
-    ['o-', 'O-'],
-    ['o+', 'O+'],
+    ['A+', 'A+'],
+    ['A-', 'A-'],
+    ['B+', 'B+'],
+    ['B-', 'B-'],
+    ['AB+', 'AB+'],
+    ['AB-', 'AB-'],
+    ['O-', 'O-'],
+    ['O+', 'O+'],
   ];

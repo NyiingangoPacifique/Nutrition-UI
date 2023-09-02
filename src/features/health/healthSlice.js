@@ -20,11 +20,11 @@ const initialState = {
   }
 
 // create new appointment
-export const createHealth = createAsyncThunk(
-    'health/create',
+export const updateHealth = createAsyncThunk(
+    'health/update',
     async (health, thunkAPI) => {
         try {
-            return await healthService.healthCreation(health)
+            return await healthService.updateHealth(health)
         } catch (error) {
             const message = (
                 error.response.data
@@ -52,18 +52,18 @@ export const healthSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(createHealth.pending, (state) => {
+            .addCase(updateHealth.pending, (state) => {
                 state.isLoadingHealth = true
                 state.isCreatedHealth = false
                 state.isErrorHealth = false
             })
-            .addCase(createHealth.fulfilled, (state=[], action) => {
+            .addCase(updateHealth.fulfilled, (state=[], action) => {
                 state.isLoadingHealth = false
                 state.isCreatedHealth = true
                 state.isErrorHealth = false
                 state.health = action.payload
             })
-            .addCase(createHealth.rejected, (state, action) => {
+            .addCase(updateHealth.rejected, (state, action) => {
                 state.isLoadingHealth = false
                 state.isCreatedHealth = false
                 state.isErrorHealth = true

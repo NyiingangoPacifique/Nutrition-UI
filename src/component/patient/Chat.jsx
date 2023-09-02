@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { getUserMeOrganization } from '../../features/auth/authSlice';
+import { getUserMeOrganization,getAllUser } from '../../features/auth/authSlice';
 import { getUserMessageContent,createChat,resetChat } from '../../features/Chat/chatSlice';
 import { format } from 'date-fns';
 import { VscOrganization } from 'react-icons/vsc';
@@ -15,9 +15,13 @@ function Chat() {
   const [chatDat, setChatDat] = useState("");
   const userOrganization = useSelector((state) => state.auths.userOrganization);
   const userMessages = useSelector((state) => state.chats.userMessages);
+  const allUsers = useSelector((state) => state.auths.allUsers)
 
   useEffect(() => {
     dispatch(getUserMessageContent()); // Fetch chat data using the Redux slice function
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(getAllUser()); // Fetch chat data using the Redux slice function
   }, [dispatch]);
 
   useEffect(() => {
@@ -63,11 +67,12 @@ function Chat() {
     navigate('/survey');
   }
 
+
   return (
     <>
       <ToastContainer />
-      {userOrganization ? (
-            userOrganization.patient_conversations.length > 0 ? (
+      {userOrganization && userOrganization.patient_conversations ? (
+          userOrganization.patient_conversations.length > 0 ? (
               <div className="flex flex-row h-screen">
                 <div className="flex flex-col w-1/4 bg-gray-100 p-4 overflow-y-auto border-r">
                   {/* Render chat conversations if userOrganization is not null */}
