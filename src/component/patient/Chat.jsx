@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
-import { getUserMeOrganization,getAllUser } from '../../features/auth/authSlice';
+import { getUserMeOrganization,getAllUser,getOneUserOrganization } from '../../features/auth/authSlice';
 import { getUserMessageContent,createChat,resetChat } from '../../features/Chat/chatSlice';
 import { format } from 'date-fns';
 import { VscOrganization } from 'react-icons/vsc';
@@ -16,6 +16,9 @@ function Chat() {
   const userOrganization = useSelector((state) => state.auths.userOrganization);
   const userMessages = useSelector((state) => state.chats.userMessages);
   const allUsers = useSelector((state) => state.auths.allUsers)
+  const [idUser, setIdUser] = useState('');
+
+  console.log("@@####",userOrganization)
 
   useEffect(() => {
     dispatch(getUserMessageContent()); // Fetch chat data using the Redux slice function
@@ -48,8 +51,7 @@ function Chat() {
 
     };
 
-    const updatedChatData = [...chatDat, newMessage]; // Update the chat data with the new message
-    console.log("ddddddddddddddddddd",newMessage)
+    const updatedChatData = [...chatDat, newMessage]; 
     setInputText(""); // Clear the input field
     setChatDat(updatedChatData); // Update the chatData state with the new message
     dispatch(createChat(newMessage));
@@ -57,9 +59,7 @@ function Chat() {
     toast.success("Message sent successfully!");
   };
   const handleConversationClick = (conversationId) => {
-    console.log("!!!!!!!!!!!!!!conversationId",conversationId)
     setSelectedConversation(conversationId);
-    console.log("%%%selected convo",selectedConversation)
     dispatch(getUserMessageContent(conversationId)); // Fetch messages for the selected conversation
   };
 
@@ -67,6 +67,12 @@ function Chat() {
     navigate('/survey');
   }
 
+  function getUsername(userID) {
+    const doctor = allUsers.find((user) => user.id === userID);
+    return doctor ? doctor.first_name : ''; // Return the doctor's first name or an empty string if not found
+  }
+
+  console.log("#######kabaye",getUsername(9))
 
   return (
     <>
@@ -84,7 +90,7 @@ function Chat() {
                           }`}
                           onClick={() => handleConversationClick(conversation.id)}
                         >
-                          {conversation.id}
+                          Conversation with {getUsername(conversation.doctor)}
                         </div>
                       ))}
                 </div>
@@ -95,22 +101,26 @@ function Chat() {
                     <div className="flex-grow overflow-y-auto">
                       {userMessages.map((message) => (
                         <div
-                          key={message.id}
-                          className={`flex w-full mb-4 ${
-                            message.sender === 2 ? "ml-auto justify-end" : ""
+                        key={message.id}
+                        className={`flex w-full mb-4 ${
+                          message.sender === userOrganization.id
+                            ? "justify-end"
+                            : "justify-start"
+                        }`}
+                      >
+                        <div
+                          className={`rounded-lg p-2 ${
+                            message.sender === userOrganization.id
+                              ? "bg-blue-500 text-white self-end"
+                              : "bg-gray-300 text-black self-start"
                           }`}
                         >
-                          <div
-                            className={`bg-gray-200 rounded-lg p-2 ${
-                              message.sender === 2 ? "bg-blue-500 text-white" : "bg-gray-300 text-black"
-                            }`}
-                          >
-                            <p className="mb-1">{message.content}</p>
-                            <p className="text-xs text-gray-500">
-                              {format(new Date(message.created_at), "MMM dd, yyyy - HH:mm")}
-                            </p>
-                          </div>
+                          <p className="mb-1">{message.content}</p>
+                          <p className="text-xs text-gray-500">
+                            {format(new Date(message.created_at), "MMM dd, yyyy - HH:mm")}
+                          </p>
                         </div>
+                      </div>
                       ))}
                     </div>
 

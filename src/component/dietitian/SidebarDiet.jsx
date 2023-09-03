@@ -16,7 +16,7 @@ const ByoseDiet = () => {
 
   const Menus = [
    { title: 'Home', path: '/', src: <AiTwotoneHome /> },
-   { title: 'Appointment', path: '/diet/appointment', src: <AiFillSchedule /> },
+   { title: 'Appointment', path: '/diet', src: <AiFillSchedule /> },
    { title: 'Chat', path: '/diet/chat', src: <AiOutlineWechat /> },
    { title: 'Meal', path: '/diet/meal', src: <GiMeal /> },
    { title: 'Prescription', path: '/diet/prescription', src: <FaPrescriptionBottleAlt /> },

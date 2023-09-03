@@ -52,6 +52,31 @@ const getUserOrganization = async () => {
   return data;
 };
 
+const getOneUser = async (userID) => {
+  const userDataString = localStorage.getItem('userData');
+  const userData = JSON.parse(userDataString);
+
+  if (!userData || !userData.token) {
+    throw new Error("Token not found in userData");
+  }
+
+  const token = userData.token;
+  const tokenPayload = jwtDecode(token);
+  const user_id = tokenPayload.user_id;
+  const headers = {
+    Accept: "*/*",
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await nutritionApi.get(`organization/me/${userID}/`, {
+    headers: headers
+  });
+
+  const data = response.data;
+  console.log("===========UserOrganization",data)
+  return data;
+};
+
 const getAllUsers = async () => {
   const userDataString = localStorage.getItem('userData');
   const userData = JSON.parse(userDataString);
@@ -67,7 +92,7 @@ const getAllUsers = async () => {
     Authorization: `Bearer ${token}`,
   };
 
-  const response = await nutritionApi.get(`organization/me/`, {
+  const response = await nutritionApi.get("organization/me/", {
     headers: headers
   });
 
@@ -108,6 +133,7 @@ const authService = {
   getUserOrganization,
   register,
   getAllUsers,
+  getOneUser
 };
 
 export default authService;

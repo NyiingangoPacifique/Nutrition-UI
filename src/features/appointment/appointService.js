@@ -75,7 +75,9 @@ const appointmentUpdate = async (updateData) => {
   
   const appointment_id=updateData.apt_id;
   const updateReq = {
-    status: updateData.aptStatus
+    status: updateData.aptStatus,
+    title: 'Body Check',
+    description: 'whole body check'
   }
 
   if (!userData || !userData.token) {
@@ -90,8 +92,8 @@ const appointmentUpdate = async (updateData) => {
     Accept: "*/*",
     Authorization: `Bearer ${token}`,
   };
-  console.log("&&&&&&&&%%%%   @@@@@@appointmentData",updateData)
-const response = await nutritionApi.put(`organization/appointment/${appointment_id}/`, updateData,{ headers });
+  console.log("&&&&&&&&%%%%   @@@@@@appointmentData",updateReq)
+const response = await nutritionApi.put(`organization/appointment/${appointment_id}/`, updateReq,{ headers });
 
 return response.data;
 };

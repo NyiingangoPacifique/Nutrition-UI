@@ -11,6 +11,7 @@ const initialState = {
     user: user ? user : null,
     userOrganization:[],
     allUsers: [],
+    oneuser: {},
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -66,6 +67,21 @@ export const getUserMeOrganization = createAsyncThunk(
     }
 )
 
+export const getOneUserOrganization = createAsyncThunk(
+    'organization/me/one/userId',
+    async (userId, thunkAPI) => {
+        try {
+            return await authService.getOneUser(userId)
+        } catch (error) {
+            const message = (
+                error.response && error.response.data && error.response.data.message
+            ) || error.message || error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }
+)
+
 // Get All User
 export const getAllUser = createAsyncThunk(
     'organization/me/',
@@ -101,6 +117,7 @@ export const authSlice = createSlice({
             state.isSuccess = false
             state.userOrganization=[]
             state.allUsers=[]
+            state.oneuser={}
             state.message = ''
         }
     },
@@ -143,6 +160,19 @@ export const authSlice = createSlice({
                 state.userOrganization = action.payload
             })
             .addCase(getUserMeOrganization.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getOneUserOrganization.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getOneUserOrganization.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.oneuser = action.payload
+            })
+            .addCase(getOneUserOrganization.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
